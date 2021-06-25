@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.GetIcons" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/violet_200</item>
+        <item name="colorPrimaryVariant">@color/violet_400</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/purple_200</item>
+        <item name="colorSecondaryVariant">@color/purple_300</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Font-family. -->
+        <item name="android:fontFamily">@font/montserrat</item>
+    </style>
+</resources>

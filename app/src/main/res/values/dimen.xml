@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="toolbar_top_margin">32dp</dimen>
+    <dimen name="toolbar_side_margin">32dp</dimen>
+
+    <dimen name="item_icon_set_sub_text">14sp</dimen>
+
+    <dimen name="margin_sm">5dp</dimen>
+    <dimen name="margin_md">11dp</dimen>
+    <dimen name="margin_lg">16dp</dimen>
+    <dimen name="margin_xl">24dp</dimen>
+    <dimen name="margin_top_icon_set_list">32dp</dimen>
+
+    <dimen name="text_sm">14sp</dimen>
+    <dimen name="text_md">16sp</dimen>
+    <dimen name="text_typical">17sp</dimen>
+    <dimen name="text_lg">18sp</dimen>
+
+    <dimen name="padding_icon_btn">5dp</dimen>
+
+    <dimen name="size_indication_icons">64dp</dimen>
+</resources>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="iconSet"
+            type="com.greedygames.geticons.data.models.IconSet" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="24dp">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/bg_item_icon_set"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="32dp"
+            android:layout_height="29dp"
+            android:scaleType="centerInside"
+            android:src="@{iconSet.isPremium ? @drawable/ic_premium : @drawable/ic_free}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
+            tools:src="@drawable/ic_premium" />
+
+        <TextView
+            android:id="@+id/textIconSetName"
+            style="@style/text_primary_bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{iconSet.name}"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView2"
+            tools:text="Foods" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{iconSet.getFormattedPrice()}"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="26dp"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="22sp"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            tools:text="$20" />
+
+        <TextView
+            android:id="@+id/textView3"
+            style="@style/text_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{iconSet.getFormattedType()}"
+            android:textSize="@dimen/item_icon_set_sub_text"
+            app:layout_constraintStart_toStartOf="@+id/textIconSetName"
+            app:layout_constraintTop_toBottomOf="@+id/textIconSetName"
+            tools:text="type : Fill" />
+
+        <ImageButton
+            android:id="@+id/info"
+            style="@style/icon_btn_typical"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="5dp"
+            android:contentDescription="@string/info"
+            android:padding="5dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_info"
+            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:tint="@null" />
+
+        <TextView
+            android:id="@+id/textView5"
+            style="@style/text_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{iconSet.author.name}"
+            android:textSize="@dimen/item_icon_set_sub_text"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/info"
+            tools:text="James Wan" />
+
+        <TextView
+            android:id="@+id/textView4"
+            style="@style/text_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/license_type_"
+            android:textSize="@dimen/item_icon_set_sub_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{iconSet.getFormattedLicense()}"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="@dimen/item_icon_set_sub_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
+            app:layout_constraintEnd_toEndOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/textView4"
+            tools:text="Creative Commons License" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

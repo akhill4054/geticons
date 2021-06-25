@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isShimmer"
+            type="Boolean" />
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.home.fragments.IconSetListFragment"
+        tools:listitem="@layout/item_icon_set">
+
+        <!-- Just a container to stack bunch of different UI layers. -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/iconSetList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/margin_top_icon_set_list"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:context=".ui.home.fragments.IconSetListFragment"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_icon_set" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:background="@drawable/gradient_effect_list_top" />
+
+            <!-- Shimmer progress. -->
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmerProgress"
+                isVisible="@{isShimmer}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:shimmer_auto_start="true"
+                tools:visibility="gone">
+
+                <include layout="@layout/shimmer_layout_icon_sets" />
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+            <!-- Error -->
+            <include
+                android:id="@+id/retry_layout"
+                layout="@layout/layout_retry_message"
+                android:visibility="gone" />
+
+            <!-- Empty message. -->
+           <include
+               android:id="@+id/emptyMessageLayout"
+               layout="@layout/layout_empty_message"
+               android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

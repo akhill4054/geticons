@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="iconSet"
+            type="com.greedygames.geticons.data.models.IconSet" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.iconset.IconSetActivity">
+
+        <ImageButton
+            android:id="@+id/navigate_up"
+            style="@style/navigate_up_btn_typical"
+            android:layout_marginStart="@dimen/toolbar_side_margin"
+            android:layout_marginTop="@dimen/toolbar_top_margin"
+            android:contentDescription="@string/navigate_back"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            style="@style/text_primary_bold"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            tools:text="Foods"
+            android:maxLines="2"
+            android:text="@{iconSet.name}"
+            android:textSize="31sp"
+            app:layout_constraintEnd_toStartOf="@+id/navigate_up"
+            app:layout_constraintTop_toBottomOf="@+id/navigate_up"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

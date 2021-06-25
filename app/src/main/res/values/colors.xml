@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Theme colors  -->
+    <color name="violet_200">#8C88F8</color>
+    <color name="violet_400">#514DCD</color>
+
+    <color name="purple_200">#A380F4</color>
+    <color name="purple_300">#7C5BC8</color>
+
+    <color name="bg_primary">#FFFFFF</color>
+    <color name="bg_primary_variant">#FBFBFC</color>
+    <color name="bg_secondary">#F3F5F6</color>
+
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#5E6988</color>
+
+    <color name="error">#F44336</color>
+    
+    <!--  Other  -->
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

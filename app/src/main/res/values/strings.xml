@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">GetIcons</string>
+
+    <string name="api_key">YEV7W4NxN8EXkI9Sh9lyU2G5qymZTG4kT0iHKeW1ywAAMv0gprPQlYua2Pazr0aW</string>
+
+    <!-- Errors/Warnings. -->
+    <string name="warn_no_internet">No internet.</string>
+    <string name="err_bad_response">Something went wrong, please try again.</string>
+    <string name="err_typical">Oops! An error occurred.</string>
+
+    <string name="tab_icon_sets">Icon Set</string>
+    <string name="tab_icons">Icons</string>
+
+    <string name="home">Home</string>
+    <string name="filter">Filter content</string>
+    <string name="search">Search</string>
+    <string name="icons">Icons</string>
+    <string name="info">Info</string>
+    <string name="license_type_">License type :&#160;</string>
+    <string name="navigate_back">Navigate back</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="no_icon_sets">No icon sets.</string>
+    <string name="no_items_in_the_list">No items in the list.</string>
+</resources>

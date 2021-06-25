@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="isEmpty"
+            type="Boolean" />
+    </data>
+
+    <LinearLayout
+        isVisible="@{isEmpty}"
+        tools:ignore="UseCompoundDrawables"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="@dimen/size_indication_icons"
+            android:layout_height="@dimen/size_indication_icons"
+            android:contentDescription="@string/no_items_in_the_list"
+            android:src="@drawable/ic_empty" />
+
+        <TextView
+            android:id="@+id/textErrorMessage"
+            style="@style/text_secondary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_md"
+            tools:text="@string/no_icon_sets"
+            android:textSize="@dimen/text_typical" />
+    </LinearLayout>
+</layout>
