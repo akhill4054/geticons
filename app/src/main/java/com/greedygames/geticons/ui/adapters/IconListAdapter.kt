@@ -8,10 +8,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.greedygames.geticons.R
-import com.greedygames.geticons.data.models.IconSet
-import com.greedygames.geticons.databinding.ItemIconSetBinding
+import com.greedygames.geticons.data.models.Icon
+import com.greedygames.geticons.databinding.ItemIconBinding
 
-class IconSetListAdapter(
+class IconListAdapter(
     itemRequestListener: ItemRequestListener,
     itemClickListener: ItemClickListener
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(DiffCallback()) {
@@ -23,46 +23,54 @@ class IconSetListAdapter(
     object DummyProgressItem
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position) is IconSet) {
-            TYPE_ICON_SET
+        return if (getItem(position) is Icon) {
+            ITEM_TYPE_ICON
         } else {
-            TYPE_PROGRESS
+            ITEM_TYPE_PROGRESS
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == TYPE_ICON_SET) {
-            IconSetViewHolder.from(parent, _itemClickListener)
+        return if (viewType == ITEM_TYPE_ICON) {
+            IconViewHolder.from(parent, _itemClickListener)
         } else {
-            ProgressItemViewHolder.from(parent)
+            ProgressItemHolder.from(parent)
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is IconSetViewHolder) {
-            holder.bind(getItem(position) as IconSet)
+        // Bind data.
+        if (holder is IconViewHolder) {
+            holder.bind(getItem(position) as Icon)
+        }
 
-            if (position == itemCount - 1) {
-                // Last item reached, request more items.
-                _itemRequestListener.onMoreItemsRequested()
-                // UI indication.
-                enableProgress()
-            }
+        if (position == itemCount - 4) {
+            enableProgress()
+            // Last item almost reached, request more items.
+            _itemRequestListener.onMoreItemsRequested()
         }
     }
 
     private fun enableProgress() {
-        val newList = currentList.toMutableList()
-        // Add dummy item to show progress.
-        newList.add(DummyProgressItem)
-        submitList(newList)
+        if(currentList[currentList.size - 1] !is DummyProgressItem) {
+            val newList = currentList.toMutableList()
+
+            // Add dummy items for progress.
+            newList.add(DummyProgressItem)
+            newList.add(DummyProgressItem)
+
+            submitList(newList)
+        }
     }
 
     fun disableProgress() {
         if (currentList.isNotEmpty() && currentList[currentList.size - 1] is DummyProgressItem) {
             val newList = currentList.toMutableList()
-            // Remove dummy item for progress.
-            newList.removeAt(newList.size - 1)
+
+            // Remove progress dummy items.
+            newList.removeLast()
+            newList.removeLast()
+
             submitList(newList)
         }
     }
@@ -70,7 +78,7 @@ class IconSetListAdapter(
     private class DiffCallback : DiffUtil.ItemCallback<Any>() {
         override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
             return when {
-                oldItem is IconSet && newItem is IconSet -> {
+                oldItem is Icon && newItem is Icon -> {
                     oldItem.id == newItem.id
                 }
                 oldItem is DummyProgressItem && newItem is DummyProgressItem -> {
@@ -88,8 +96,8 @@ class IconSetListAdapter(
         }
     }
 
-    class IconSetViewHolder(
-        binding: ItemIconSetBinding,
+    class IconViewHolder(
+        binding: ItemIconBinding,
         private val itemClickListener: ItemClickListener
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 
@@ -98,28 +106,36 @@ class IconSetListAdapter(
         init {
             // Click listeners.
             _binding.info.setOnClickListener(this)
+            _binding.download.setOnClickListener(this)
             _binding.root.setOnClickListener(this)
         }
 
-        fun bind(iconSet: IconSet) {
-            _binding.iconSet = iconSet
+        fun bind(icon: Icon) {
+            _binding.icon = icon
         }
 
         override fun onClick(view: View?) {
             // Reference to clicked IconSet object.
-            val iconSet = _binding.iconSet!!
+            val icon = _binding.icon!!
 
             itemClickListener.onIconSetItemClicked(
-                if (view!!.id == R.id.info) {
-                    // Info button clicked, request to
-                    // show item info.
-                    CLICK_ID_SHOW_INFO
-                } else {
-                    // Root view clicked, request to show
-                    // item details.
-                    CLICK_ID_SHOW_DETAILS
+                when (view!!.id) {
+                    R.id.info -> {
+                        // Info button clicked, request to
+                        // show item info.
+                        CLICK_ID_SHOW_INFO
+                    }
+                    R.id.download -> {
+                        // Request to donload the icon.
+                        CLICK_ID_DOWNLOAD
+                    }
+                    else -> {
+                        // Root view clicked, request to show
+                        // item details.
+                        CLICK_ID_SHOW_DETAILS
+                    }
                 },
-                iconSet
+                icon
             )
         }
 
@@ -127,43 +143,42 @@ class IconSetListAdapter(
             fun from(
                 parent: ViewGroup,
                 itemClickListener: ItemClickListener
-            ): IconSetViewHolder {
+            ): IconViewHolder {
                 val inflater = LayoutInflater.from(parent.context)
-                val binding = DataBindingUtil.inflate<ItemIconSetBinding>(
+                val binding = DataBindingUtil.inflate<ItemIconBinding>(
                     inflater,
-                    R.layout.item_icon_set,
+                    R.layout.item_icon,
                     parent,
                     false
                 )
 
-                return IconSetViewHolder(binding, itemClickListener)
+                return IconViewHolder(binding, itemClickListener)
             }
         }
     }
 
-    class ProgressItemViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class ProgressItemHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         companion object {
-            fun from(parent: ViewGroup): ProgressItemViewHolder {
+            fun from(parent: ViewGroup): ProgressItemHolder {
                 val inflater = LayoutInflater.from(parent.context)
                 val view = inflater.inflate(
-                    R.layout.item_progress,
+                    R.layout.item_icon_progress,
                     parent,
                     false
                 )
-
-                return ProgressItemViewHolder(view)
+                return ProgressItemHolder(view)
             }
         }
     }
 
     companion object {
-        // Item types.
-        private const val TYPE_ICON_SET = 0
-        private const val TYPE_PROGRESS = 1
+        private const val ITEM_TYPE_ICON = 0
+        private const val ITEM_TYPE_PROGRESS = 1
 
         const val CLICK_ID_SHOW_DETAILS = 0
         const val CLICK_ID_SHOW_INFO = 1
+        const val CLICK_ID_DOWNLOAD = 2
     }
 
     interface ItemRequestListener {
@@ -171,6 +186,6 @@ class IconSetListAdapter(
     }
 
     interface ItemClickListener {
-        fun onIconSetItemClicked(clickId: Int, iconSet: IconSet)
+        fun onIconSetItemClicked(clickId: Int, icon: Icon)
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="isShimmer"
+            type="Boolean" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/icons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingStart="32dp"
+            android:paddingTop="32dp"
+            android:paddingEnd="8dp"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_icon" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerProgress"
+            isVisible="@{isShimmer}"
+            android:layout_width="match_parent"
+            android:paddingTop="32dp"
+            tools:visibility="gone"
+            app:shimmer_auto_start="true"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/shimmerPlaceholderLayout"
+                layout="@layout/shimmer_layout_icons" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@drawable/gradient_effect_list_top" />
+
+        <include
+            android:id="@+id/emptyMessageLayout"
+            layout="@layout/layout_empty_message" />
+
+        <include
+            android:id="@+id/retryLayout"
+            layout="@layout/layout_retry_message" />
+    </FrameLayout>
+</layout>

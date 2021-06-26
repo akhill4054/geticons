@@ -16,6 +16,7 @@ class IconSetListViewModel(application: Application) : AndroidViewModel(applicat
 
     private val iconSetRepository = IconSetRepository.getInstance(application)
 
+    @Volatile
     private var iconSetList = mutableListOf<IconSet>()
 
     private val _iconSetListData = MutableLiveData<IconSetListData>()
@@ -28,10 +29,10 @@ class IconSetListViewModel(application: Application) : AndroidViewModel(applicat
 
     private fun loadItems() {
         // To avoid multiple fetch requests at once.
-        if (_iconSetListData.value !is FetchIsInProgress) {
+        if (_iconSetListData.value !is IconSetListData.FetchIsInProgress) {
             // Change state.
             // Notify observers.
-            _iconSetListData.value = FetchIsInProgress(iconSetList)
+            _iconSetListData.value = IconSetListData.FetchIsInProgress(iconSetList)
 
             val after = if (iconSetList.isEmpty()) {
                 null
@@ -47,10 +48,14 @@ class IconSetListViewModel(application: Application) : AndroidViewModel(applicat
                     // Append old list with new items.
                     iconSetList.addAll(it.iconSets)
                     // Notify observers.
-                    _iconSetListData.postValue(Success(iconSetList))
+                    _iconSetListData.postValue(
+                        IconSetListData.Success(iconSetList)
+                    )
                 }.onFailure {
                     // Notify observers.
-                    _iconSetListData.postValue(Error(currentList = iconSetList))
+                    _iconSetListData.postValue(
+                        IconSetListData.Error(currentList = iconSetList)
+                    )
                 }
             }
         }
@@ -74,13 +79,14 @@ class IconSetListViewModel(application: Application) : AndroidViewModel(applicat
         // Request to load new items.
         loadItems()
     }
-}
 
-// States provided by this ViewModel.
-sealed class IconSetListData
-class Success(val newList: List<IconSet>) : IconSetListData()
-class FetchIsInProgress(val currentList: List<IconSet>) : IconSetListData()
-class Error(
-    val code: Int = ERROR_TYPICAL,
-    val currentList: List<IconSet>
-) : IconSetListData()
+    // States provided by this ViewModel.
+    sealed class IconSetListData {
+        class Success(val newList: List<IconSet>) : IconSetListData()
+        class FetchIsInProgress(val currentList: List<IconSet>) : IconSetListData()
+        class Error(
+            val code: Int = ERROR_TYPICAL,
+            val currentList: List<IconSet>
+        ) : IconSetListData()
+    }
+}

@@ -1,6 +1,9 @@
 package com.greedygames.geticons.repositories
 
 import android.app.Application
+import com.greedygames.geticons.PAGINATION_ITEM_COUNT
+import com.greedygames.geticons.data.IconSetDetails
+import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.data.net.ApiClient
 import com.greedygames.geticons.data.net.ApiInterface
 import com.greedygames.geticons.data.net.models.IconSetsResponse
@@ -14,12 +17,11 @@ class IconSetRepository private constructor(application: Application) {
         apiInterface = apiClient.apiInterface
     }
 
-    /**
-     * @param after, Icon set ID of the last icon set received.
-     * If empty, the count most recently published icon sets are returned.
-     * */
     suspend fun getIconSets(after: Int?): IconSetsResponse =
-        apiInterface.getIconSets(after = after)
+        apiInterface.getIconSets(after = after, count = PAGINATION_ITEM_COUNT)
+
+    suspend fun getIconSetDetails(iconSet: IconSet): IconSetDetails =
+        apiInterface.getIconSetDetails(iconSet.id)
 
     companion object {
         @Volatile

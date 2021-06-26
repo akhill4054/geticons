@@ -12,10 +12,8 @@ import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.databinding.FragmentIconSetListBinding
 import com.greedygames.geticons.ui.adapters.IconSetListAdapter
 import com.greedygames.geticons.utils.interfaces.SnackbarListener
-import com.greedygames.geticons.viewmodels.Error
-import com.greedygames.geticons.viewmodels.FetchIsInProgress
 import com.greedygames.geticons.viewmodels.IconSetListViewModel
-import com.greedygames.geticons.viewmodels.Success
+import com.greedygames.geticons.viewmodels.IconSetListViewModel.IconSetListData
 
 class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
     IconSetListAdapter.ItemClickListener {
@@ -68,7 +66,7 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
     private fun setupViews() {
         // Setup view here.
         // Empty list message.
-        binding.emptyMessageLayout.textErrorMessage.text = getString(R.string.no_icon_sets)
+        binding.emptyMessageLayout.textEmptyMessage.text = getString(R.string.no_icon_sets)
         // Disable swipeRefresh until the first load.
         binding.swipeRefreshLayout.isEnabled = false
         // Show shimmer.
@@ -101,7 +99,7 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
     private fun subscribeObservers() {
         // Observe liveData here.
         viewModel.iconSetListData.observe(viewLifecycleOwner, { data ->
-            if (data !is FetchIsInProgress) {
+            if (data !is IconSetListData.FetchIsInProgress) {
                 // Hide empty message, if visible.
                 binding.emptyMessageLayout.isEmpty = false
                 // Hide progress, if it's.
@@ -114,7 +112,7 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
             }
 
             when (data) {
-                is Success -> {
+                is IconSetListData.Success -> {
                     // Update binding object.
                     binding.emptyMessageLayout.isEmpty = data.newList.isEmpty()
                     // Enable swipeRefresh.
@@ -123,7 +121,7 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
                     // Update list.
                     iconSetListAdapter.submitList(data.newList)
                 }
-                is Error -> {
+                is IconSetListData.Error -> {
                     // Disable pagination progress. if enables.
                     iconSetListAdapter.disableProgress()
 

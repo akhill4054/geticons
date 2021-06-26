@@ -15,7 +15,7 @@ import com.greedygames.geticons.ERROR_NO_INTERNET
 import com.greedygames.geticons.R
 import com.greedygames.geticons.databinding.ActivityHomeBinding
 import com.greedygames.geticons.ui.home.fragments.IconSetListFragment
-import com.greedygames.geticons.ui.home.fragments.IconsFragment
+import com.greedygames.geticons.ui.home.fragments.IconSearchFragment
 import com.greedygames.geticons.utils.interfaces.SnackbarListener
 
 class HomeActivity : AppCompatActivity(), SnackbarListener {
@@ -102,7 +102,7 @@ class HomeActivity : AppCompatActivity(), SnackbarListener {
 
         private val fragments = listOf(
             IconSetListFragment(),
-            IconsFragment()
+            IconSearchFragment()
         )
 
         val titles = listOf(

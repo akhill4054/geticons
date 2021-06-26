@@ -6,8 +6,6 @@ import com.greedygames.geticons.R
 
 class IconSetActivity : AppCompatActivity() {
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_icon_set)

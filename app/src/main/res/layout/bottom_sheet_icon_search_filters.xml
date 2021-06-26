@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_bottom_sheet"
+    android:paddingBottom="@dimen/margin_xl">
+
+    <ImageButton
+        android:id="@+id/close"
+        style="@style/icon_btn_typical"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:contentDescription="@string/close"
+        android:src="@drawable/ic_close_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView15"
+        style="@style/text_primary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/filter_icons"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/close" />
+
+    <TextView
+        android:id="@+id/textView17"
+        style="@style/text_secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_lg"
+        android:text="@string/premium_"
+        android:textSize="@dimen/text_md"
+        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_goneMarginTop="@dimen/margin_md" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/premiumFilters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_sm"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView17"
+        tools:listitem="@layout/spinner_list_item" />
+
+    <TextView
+        android:id="@+id/textView18"
+        style="@style/text_secondary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_md"
+        android:text="@string/license_type_"
+        android:textSize="@dimen/text_md"
+        app:layout_constraintStart_toStartOf="@+id/premiumFilters"
+        app:layout_constraintTop_toBottomOf="@+id/premiumFilters" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/licenseFilter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_sm"
+        app:layout_constraintEnd_toEndOf="@+id/premiumFilters"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView17"
+        app:layout_constraintTop_toBottomOf="@+id/textView18"
+        tools:listitem="@layout/spinner_list_item" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/clear_filter"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:cornerRadius="8dp"
+        android:layout_marginTop="@dimen/margin_lg"
+        android:text="@string/clear_filter"
+        android:textAllCaps="false"
+        android:textSize="@dimen/text_typical"
+        app:layout_constraintEnd_toEndOf="@+id/licenseFilter"
+        app:layout_constraintStart_toStartOf="@+id/licenseFilter"
+        app:layout_constraintTop_toBottomOf="@+id/licenseFilter" />
+</androidx.constraintlayout.widget.ConstraintLayout>

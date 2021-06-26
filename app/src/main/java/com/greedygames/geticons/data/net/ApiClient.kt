@@ -5,6 +5,7 @@ import com.greedygames.geticons.BASE_URL
 import com.greedygames.geticons.CONNECTION_TIMEOUT_IN_SECONDS
 import com.greedygames.geticons.R
 import com.greedygames.geticons.REQUEST_TIMEOUT_IN_SECONDS
+import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,28 +17,27 @@ class ApiClient private constructor(application: Application) {
 
     init {
         // Building and setting-up http interceptor
-        val httpClientBuilder = OkHttpClient.Builder()
-        httpClientBuilder.readTimeout(
-            REQUEST_TIMEOUT_IN_SECONDS.toLong(),
-            TimeUnit.SECONDS
-        )
-        httpClientBuilder.connectTimeout(
-            CONNECTION_TIMEOUT_IN_SECONDS.toLong(),
-            TimeUnit.SECONDS
-        )
-        httpClientBuilder.addInterceptor { chain ->
-            val request = chain.request().newBuilder()
+        val httpClient = OkHttpClient.Builder()
+            .readTimeout(
+                REQUEST_TIMEOUT_IN_SECONDS.toLong(),
+                TimeUnit.SECONDS
+            ).connectTimeout(
+                CONNECTION_TIMEOUT_IN_SECONDS.toLong(),
+                TimeUnit.SECONDS
+            ).addInterceptor { chain ->
+                val request = chain.request().newBuilder()
 
-            // Add global headers here
-            request.addHeader("Accept", "application/json")
-            request.addHeader(
-                "Authorization",
-                "Bearer ${application.getString(R.string.api_key)}"
-            )
+                // Add global headers here
+                request.addHeader("Accept", "application/json")
+                request.addHeader(
+                    "Authorization",
+                    "Bearer ${application.getString(R.string.api_key)}"
+                )
 
-            chain.proceed(request.build())
-        }
-        val httpClient = httpClientBuilder.build()
+                chain.proceed(request.build())
+            }
+            .addInterceptor(ChuckInterceptor(application))
+            .build()
 
         val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)

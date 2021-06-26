@@ -23,5 +23,31 @@
     <string name="error">Error</string>
     <string name="retry">Retry</string>
     <string name="no_icon_sets">No icon sets.</string>
+    <string name="no_icon_found">No icon found.</string>
     <string name="no_items_in_the_list">No items in the list.</string>
+    <string name="type_s">Type : %s</string>
+    <string name="free">Free</string>
+    <string name="premium">Premium</string>
+    <string name="info_">Info:</string>
+    <string name="icon">Icon</string>
+    <string name="download">Download</string>
+    <string name="type_">Type :&#160;</string>
+    <string name="price_">Price :&#160;</string>
+    <string name="close">Close</string>
+    <string name="filter_icons">Filter Icons</string>
+    <string name="premium_">Premium :</string>
+    <string name="clear_filter">Clear Filter</string>
+
+    <!-- Icon search filter option items. -->
+    <string-array name="filter_by_premium_options">
+        <item>Not Selected</item>
+        <item>Free</item>
+        <item>Premium</item>
+    </string-array>
+
+    <string-array name="filter_by_license_options">
+        <item>Not Selected</item>
+        <item>Commercial</item>
+        <item>No Attribution</item>
+    </string-array>
 </resources>
