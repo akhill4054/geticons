@@ -130,6 +130,7 @@ class IconSearchFiltersBottomSheet : BottomSheetDialogFragment() {
             viewModel.clearFilter()
             // Update UI.
             updateViewsBySearchFilter(viewModel.searchFilter)
+            dismissAllowingStateLoss()
         }
         binding.close.setOnClickListener {
             dismissAllowingStateLoss()

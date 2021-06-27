@@ -11,7 +11,8 @@ import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.databinding.FragmentIconSetListBinding
 import com.greedygames.geticons.ui.adapters.IconSetListAdapter
-import com.greedygames.geticons.utils.interfaces.SnackbarListener
+import com.greedygames.geticons.ui.iconset.IconSetActivity
+import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSetListViewModel
 import com.greedygames.geticons.viewmodels.IconSetListViewModel.IconSetListData
 
@@ -28,17 +29,18 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
 
     private lateinit var iconSetListAdapter: IconSetListAdapter
 
-    private lateinit var snackbarListener: SnackbarListener
+    private lateinit var snackbarListener: SnackbarHelper.SnackbarListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         // Try to attach to Snackbar listener.
         try {
-            snackbarListener = context as SnackbarListener
+            snackbarListener = context as SnackbarHelper.SnackbarListener
         } catch (e: Exception) {
             throw RuntimeException(
-                "${context::class.simpleName} must implement ${SnackbarListener::class.simpleName}!"
+                "${context::class.simpleName} must implement " +
+                        "${SnackbarHelper.SnackbarListener::class.simpleName}!"
             )
         }
     }
@@ -67,8 +69,6 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
         // Setup view here.
         // Empty list message.
         binding.emptyMessageLayout.textEmptyMessage.text = getString(R.string.no_icon_sets)
-        // Disable swipeRefresh until the first load.
-        binding.swipeRefreshLayout.isEnabled = false
         // Show shimmer.
         binding.isShimmer = true
 
@@ -78,11 +78,6 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
             this
         )
         binding.iconSetList.adapter = iconSetListAdapter
-
-        // SwipeRefresh listener
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshList()
-        }
 
         // Click listeners
         binding.retryLayout.retry.setOnClickListener {
@@ -102,8 +97,6 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
             if (data !is IconSetListData.FetchIsInProgress) {
                 // Hide empty message, if visible.
                 binding.emptyMessageLayout.isEmpty = false
-                // Hide progress, if it's.
-                binding.swipeRefreshLayout.isRefreshing = false
                 // Stop shimmer.
                 binding.shimmerProgress.stopShimmer()
                 binding.isShimmer = false
@@ -115,9 +108,6 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
                 is IconSetListData.Success -> {
                     // Update binding object.
                     binding.emptyMessageLayout.isEmpty = data.newList.isEmpty()
-                    // Enable swipeRefresh.
-                    binding.swipeRefreshLayout.isEnabled = true
-
                     // Update list.
                     iconSetListAdapter.submitList(data.newList)
                 }
@@ -149,7 +139,8 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
 
     override fun onIconSetItemClicked(clickId: Int, iconSet: IconSet) {
         if (clickId == IconSetListAdapter.CLICK_ID_SHOW_DETAILS) {
-
+            // Navigate to icon set details screen.
+            IconSetActivity.launch(this, iconSet)
         } else { // Show info.
 
         }

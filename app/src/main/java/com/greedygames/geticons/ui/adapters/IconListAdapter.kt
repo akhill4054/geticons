@@ -20,7 +20,7 @@ class IconListAdapter(
     private val _itemClickListener = itemClickListener
 
     // Dummy object for progress item.
-    object DummyProgressItem
+    private object DummyProgressItem
 
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position) is Icon) {

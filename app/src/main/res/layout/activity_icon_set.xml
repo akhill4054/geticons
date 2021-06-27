@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="iconSet"
-            type="com.greedygames.geticons.data.models.IconSet" />
+            name="isLoading"
+            type="Boolean" />
 
         <variable
             name="iconSetDetails"
@@ -15,6 +15,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.iconset.IconSetActivity">
@@ -22,27 +23,28 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
             android:backgroundTint="@android:color/transparent"
             app:elevation="0dp">
 
-            <ImageButton
-                android:id="@+id/navigate_up"
-                style="@style/navigate_up_btn_typical"
-                android:layout_marginStart="22sp"
-                android:layout_marginTop="@dimen/toolbar_top_margin"
-                android:contentDescription="@string/navigate_back" />
-
             <com.google.android.material.appbar.CollapsingToolbarLayout
-                isVisible="@{iconSetDetails != null}"
+                isVisible="@{!isLoading}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                tools:visibility="visible">
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap|enterAlways">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
+
+                    <ImageButton
+                        android:id="@+id/navigate_up"
+                        style="@style/navigate_up_btn_typical"
+                        android:layout_marginStart="22sp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="@dimen/toolbar_top_margin"
+                        android:contentDescription="@string/navigate_back" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -54,11 +56,11 @@
                         android:layout_marginEnd="@dimen/margin_md"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:text="@{iconSet.name}"
+                        android:text="@{iconSetDetails.name}"
                         android:textSize="31sp"
                         app:layout_constraintEnd_toStartOf="@+id/imageView2"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/navigate_up"
                         tools:text="Foods" />
 
                     <TextView
@@ -67,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="11dp"
-                        android:text="@{@string/type_s(iconSet.type)}"
+                        android:text="@{@string/type_s(iconSetDetails.formattedType)}"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="@+id/textView7"
                         app:layout_constraintTop_toBottomOf="@+id/textView7"
@@ -93,24 +95,28 @@
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_marginEnd="@dimen/toolbar_side_margin"
-                        android:contentDescription="@{iconSet.isPremium ? @string/premium : @string/free}"
-                        android:src="@{iconSet.isPremium ? @drawable/ic_premium : @drawable/ic_free}"
+                        android:contentDescription="@{iconSetDetails.isPremium ? @string/premium : @string/free}"
+                        android:src="@{iconSetDetails.isPremium ? @drawable/ic_premium : @drawable/ic_free}"
                         app:layout_constraintBottom_toBottomOf="@+id/textView7"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/textView7"
                         tools:src="@drawable/ic_free" />
 
                     <TextView
-                        android:id="@+id/textView9"
-                        android:layout_width="0dp"
+                        android:id="@+id/author"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="16dp"
                         android:layout_marginEnd="@dimen/margin_md"
-                        android:text="@{iconSet.author.name}"
+                        android:ellipsize="end"
                         android:textColor="?attr/colorPrimary"
+                        android:maxLines="2"
+                        android:text="@{iconSetDetails.author.name}"
+                        app:layout_constrainedWidth="true"
                         android:textSize="25sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toStartOf="@+id/textView10"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/textView7"
                         app:layout_constraintTop_toBottomOf="@+id/textView8"
                         tools:text="James Wan" />
@@ -119,26 +125,26 @@
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{iconSet.formattedPrice}"
+                        android:text="@{iconSetDetails.formattedPrice}"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="30sp"
                         android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView9"
+                        app:layout_constraintBottom_toBottomOf="@+id/author"
                         app:layout_constraintEnd_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toTopOf="@+id/textView9"
+                        app:layout_constraintTop_toTopOf="@+id/author"
                         tools:text="$250" />
 
                     <TextView
                         android:id="@+id/textView11"
-                        web_Url="@{iconSetDetails.websiteUrl}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:textColor="?attr/colorPrimary"
                         android:textSize="18sp"
+                        web_Url="@{iconSetDetails.formattedWebsite}"
                         app:layout_constraintEnd_toEndOf="@+id/textView10"
-                        app:layout_constraintStart_toStartOf="@+id/textView9"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9"
+                        app:layout_constraintStart_toStartOf="@+id/author"
+                        app:layout_constraintTop_toBottomOf="@+id/author"
                         tools:text="www.asdf123.com" />
 
                     <TextView
@@ -146,7 +152,7 @@
                         style="@style/text_secondary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="21dp"
+                        android:layout_marginTop="16dp"
                         android:text="@string/info_"
                         android:textSize="25sp"
                         app:layout_constraintStart_toStartOf="@+id/textView11"
@@ -157,7 +163,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_sm"
                         android:justificationMode="inter_word"
-                        android:text="@{iconSetDetails.formattedReadme}"
+                        from_html="@{iconSetDetails.formattedReadme}"
                         android:textColor="@color/text_light"
                         android:textSize="17sp"
                         app:layout_constraintEnd_toEndOf="@+id/imageView2"
@@ -170,14 +176,26 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <include
+            android:id="@+id/layoutIcons"
             layout="@layout/layout_icon_list" />
 
-        <com.google.android.material.progressindicator.CircularProgressIndicator
-            isVisible="@{iconSetDetails == null}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:indeterminate="true"
-            android:indeterminateTint="?attr/colorPrimary" />
+        <include
+            android:id="@+id/retryLayout"
+            layout="@layout/layout_retry_message" />
+
+        <FrameLayout
+            isVisible="@{isLoading}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorSurface"
+            tools:visibility="gone">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="?attr/colorPrimary" />
+        </FrameLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

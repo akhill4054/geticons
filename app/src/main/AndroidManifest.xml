@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GetIcons">
-        <activity android:name=".ui.iconset.IconSetActivity"></activity>
+
+        <activity android:name=".ui.iconset.IconSetActivity" />
+
         <activity
             android:name=".ui.home.HomeActivity"
             android:screenOrientation="portrait">
@@ -27,5 +29,4 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
 </manifest>

@@ -10,27 +10,21 @@
             type="Boolean" />
     </data>
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <!-- Just a container to stack bunch of different UI layers. -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.fragments.IconSetListFragment"
-        tools:listitem="@layout/item_icon_set">
+        tools:context=".ui.home.fragments.IconSetListFragment">
 
-        <!-- Just a container to stack bunch of different UI layers. -->
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/iconSetList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/iconSetList"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingTop="@dimen/margin_top_icon_set_list"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:context=".ui.home.fragments.IconSetListFragment"
-                tools:itemCount="4"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/margin_top_icon_set_list"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context=".ui.home.fragments.IconSetListFragment"
+            tools:itemCount="4"
                 tools:listitem="@layout/item_icon_set" />
 
             <View
@@ -52,16 +46,15 @@
             </com.facebook.shimmer.ShimmerFrameLayout>
 
             <!-- Error -->
-            <include
-                android:id="@+id/retry_layout"
-                layout="@layout/layout_retry_message"
-                android:visibility="gone" />
+        <include
+            android:id="@+id/retry_layout"
+            layout="@layout/layout_retry_message"
+            android:visibility="gone" />
 
-            <!-- Empty message. -->
-           <include
-               android:id="@+id/emptyMessageLayout"
-               layout="@layout/layout_empty_message"
-               android:visibility="gone" />
-        </RelativeLayout>
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        <!-- Empty message. -->
+        <include
+            android:id="@+id/emptyMessageLayout"
+            layout="@layout/layout_empty_message"
+            android:visibility="gone" />
+    </FrameLayout>
 </layout>

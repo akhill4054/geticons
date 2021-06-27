@@ -36,11 +36,13 @@
         <item name="android:background">@drawable/bg_item_icon_set</item>
     </style>
 
-    <style name="navigate_up_btn_typical" parent="icon_btn_typical">
-        <item name="android:layout_width">33dp</item>
-        <item name="android:layout_height">33dp</item>
+    <style name="navigate_up_btn_typical">
+        <item name="android:layout_width">34dp</item>
+        <item name="android:layout_height">34dp</item>
         <item name="tint">?attr/colorPrimary</item>
-        <item name="android:padding">@dimen/margin_md</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:background">?attr/actionBarItemBackground</item>
+        <item name="android:padding">5dp</item>
         <item name="android:src">@drawable/ic_back_arrow_ios_24</item>
     </style>
 

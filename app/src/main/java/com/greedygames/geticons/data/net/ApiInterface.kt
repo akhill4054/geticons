@@ -1,17 +1,18 @@
 package com.greedygames.geticons.data.net
 
 import com.greedygames.geticons.data.IconSetDetails
-import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.data.net.models.CategoriesResponse
-import com.greedygames.geticons.data.net.models.IconSearchResponse
+import com.greedygames.geticons.data.net.models.IconListResponse
 import com.greedygames.geticons.data.net.models.IconSetsResponse
 import com.greedygames.geticons.data.net.models.StylesResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface ApiInterface {
+    // IconSet
     /**
      * @param after, Icon set ID of the last icon set received.
      * If empty, the count most recently published icon sets are returned.
@@ -23,20 +24,22 @@ interface ApiInterface {
     ): IconSetsResponse
 
     @GET("/v4/iconsets/{iconset_id}")
-    suspend fun getIconSetDetails(@Path("iconset_id") iconSetId: Int): IconSetDetails
+    suspend fun getIconSetDetails(@Path("iconset_id") iconSetId: Int): Response<IconSetDetails>
 
-    @GET("/v4/iconsets/iconset_id/icons")
-    suspend fun getIconsFromIconSet(
+    @GET("/v4/iconsets/{iconset_id}/icons")
+    suspend fun getIconSetIcons(
+        @Path("iconset_id") iconSetId: Int,
         @Query("offset") offset: Int,
         @Query("count") count: Int
-    ): List<Icon>
+    ): IconListResponse
 
     @GET("/v4/icons/search")
     suspend fun getIcons(
         @Query("offset") offset: Int,
         @Query("count") count: Int
-    ): IconSearchResponse
+    ): IconListResponse
 
+    // Icon
     /**
      * @param params, available extra query params to pass:
      * premium: boolean, true -> premium, false -> free.
@@ -51,7 +54,7 @@ interface ApiInterface {
         @Query("count") count: Int,
         @Query("query") query: String,
         @QueryMap params: Map<String, String>
-    ): IconSearchResponse
+    ): IconListResponse
 
     @GET("/v4/categories")
     suspend fun getCategories(): CategoriesResponse

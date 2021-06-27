@@ -14,7 +14,7 @@ import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.databinding.FragmentIconSearchBinding
 import com.greedygames.geticons.ui.adapters.IconListAdapter
 import com.greedygames.geticons.ui.home.dialogs.IconSearchFiltersBottomSheet
-import com.greedygames.geticons.utils.interfaces.SnackbarListener
+import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSearchViewModel
 import com.greedygames.geticons.viewmodels.IconSearchViewModel.IconListData
 
@@ -31,16 +31,19 @@ class IconSearchFragment : Fragment(), IconListAdapter.ItemRequestListener,
 
     private lateinit var iconListAdapter: IconListAdapter
 
-    private lateinit var snackbarListener: SnackbarListener
+    private lateinit var snackbarListener: SnackbarHelper.SnackbarListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         // Try to attach SnackBarListener.
         try {
-            snackbarListener = context as SnackbarListener
+            snackbarListener = context as SnackbarHelper.SnackbarListener
         } catch (e: Exception) {
-            throw RuntimeException("Parent activity must implement ${SnackbarListener::class.simpleName}!")
+            throw RuntimeException(
+                "Parent activity must implement " +
+                        "${SnackbarHelper.SnackbarListener::class.simpleName}!"
+            )
         }
     }
 
@@ -82,9 +85,6 @@ class IconSearchFragment : Fragment(), IconListAdapter.ItemRequestListener,
         iconsRecyclerView.adapter = iconListAdapter
 
         // Listeners
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refreshList()
-        }
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
@@ -114,7 +114,6 @@ class IconSearchFragment : Fragment(), IconListAdapter.ItemRequestListener,
         viewModel.searchResult.observe(viewLifecycleOwner, { data ->
             // Hide progress.
             hideShimmer()
-            binding.swipeRefreshLayout.isRefreshing = false
             // Hide empty status, if visible.
             iconListLayout.emptyMessageLayout.isEmpty = false
             // Hide retry, is visible.

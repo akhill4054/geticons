@@ -44,15 +44,11 @@
                 android:src="@drawable/ic_filter" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <include
+            android:id="@+id/iconListLayout"
+            layout="@layout/layout_icon_list"
             android:layout_width="match_parent"
-            android:layout_weight="1"
-            android:layout_height="0dp">
-
-            <include
-                android:id="@+id/iconListLayout"
-                layout="@layout/layout_icon_list" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1" />
     </LinearLayout>
 </layout>

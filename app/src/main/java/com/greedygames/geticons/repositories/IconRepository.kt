@@ -6,7 +6,7 @@ import com.greedygames.geticons.data.models.Category
 import com.greedygames.geticons.data.models.Style
 import com.greedygames.geticons.data.net.ApiClient
 import com.greedygames.geticons.data.net.models.CategoriesResponse
-import com.greedygames.geticons.data.net.models.IconSearchResponse
+import com.greedygames.geticons.data.net.models.IconListResponse
 import com.greedygames.geticons.data.net.models.StylesResponse
 
 class IconRepository private constructor(application: Application) {
@@ -17,7 +17,7 @@ class IconRepository private constructor(application: Application) {
         offset: Int = 0,
         searchQuery: String,
         searchFilter: IconSearchFilter?
-    ): IconSearchResponse {
+    ): IconListResponse {
         // Additional query params for better search.
         val params: HashMap<String, String> = (searchFilter?.run {
             val map = HashMap<String, String>()

@@ -1,24 +1,19 @@
 package com.greedygames.geticons.ui.home
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
-import com.greedygames.geticons.ERROR_BAD_RESPONSE
-import com.greedygames.geticons.ERROR_NO_INTERNET
 import com.greedygames.geticons.R
 import com.greedygames.geticons.databinding.ActivityHomeBinding
-import com.greedygames.geticons.ui.home.fragments.IconSetListFragment
 import com.greedygames.geticons.ui.home.fragments.IconSearchFragment
-import com.greedygames.geticons.utils.interfaces.SnackbarListener
+import com.greedygames.geticons.ui.home.fragments.IconSetListFragment
+import com.greedygames.geticons.utils.SnackbarHelper
 
-class HomeActivity : AppCompatActivity(), SnackbarListener {
+class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -37,7 +32,6 @@ class HomeActivity : AppCompatActivity(), SnackbarListener {
         // ViewPager
         val pagerAdapter = HomePagerAdapter(this)
         viewPager.adapter = pagerAdapter
-        viewPager.isUserInputEnabled = false
 
         // Setup tabLayout with viewPager
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
@@ -55,46 +49,20 @@ class HomeActivity : AppCompatActivity(), SnackbarListener {
         }
     }
 
-    private fun showSnackbar(
-        message: String,
-        anchorView: View?,
-        isError: Boolean = false
-    ) {
-        val sb = Snackbar.make(
-            binding.coordinatorLayout,
-            message,
-            Snackbar.LENGTH_SHORT
-        )
-        if (anchorView != null) {
-            sb.anchorView = anchorView
-        }
-        if (isError) {
-            sb.setTextColor(Color.WHITE)
-            sb.setBackgroundTint(ContextCompat.getColor(this, R.color.error))
-        }
-        sb.show()
-    }
-
     // SnackBar listener callbacks.
     override fun onShowSnackbar(message: String, anchorView: View?) {
-        showSnackbar(message, anchorView)
+        SnackbarHelper.showSnackbar(
+            binding.coordinatorLayout,
+            message,
+            anchorView
+        )
     }
 
     override fun onError(code: Int, anchorView: View?) {
-        showSnackbar(
-            when (code) {
-                ERROR_NO_INTERNET -> {
-                    getString(R.string.warn_no_internet)
-                }
-                ERROR_BAD_RESPONSE -> {
-                    getString(R.string.err_bad_response)
-                }
-                else -> {
-                    getString(R.string.err_typical)
-                }
-            },
-            anchorView = anchorView,
-            isError = true
+        SnackbarHelper.showError(
+            binding.root,
+            code,
+            anchorView
         )
     }
 
