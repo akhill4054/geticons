@@ -13,7 +13,17 @@ class PreferenceManager private constructor(context: Context) {
     fun getIsDarkMode(): Boolean = getBool(KEY_IS_DARK_MODE)
 
     fun setIsDarkMode(isDarkMode: Boolean) {
+        // Update theme modification status
+        setWasThemeEverModified()
+        // Save dark mode status
         putBool(KEY_IS_DARK_MODE, isDarkMode)
+    }
+
+    fun getWasThemeEverModified(): Boolean =
+        getBool(KEY_WAS_THEME_EVER_MODIFIED)
+
+    private fun setWasThemeEverModified() {
+        putBool(KEY_WAS_THEME_EVER_MODIFIED, true)
     }
 
     private fun getBool(key: String): Boolean {
@@ -28,6 +38,7 @@ class PreferenceManager private constructor(context: Context) {
 
     companion object {
         private const val KEY_IS_DARK_MODE = "is_dark_mode"
+        private const val KEY_WAS_THEME_EVER_MODIFIED = "was_theme_ever_modified"
 
         @Volatile
         private var INSTANCE: PreferenceManager? = null

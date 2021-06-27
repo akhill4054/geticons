@@ -10,6 +10,7 @@
     <dimen name="margin_lg">16dp</dimen>
     <dimen name="margin_xl">24dp</dimen>
     <dimen name="margin_top_icon_set_list">32dp</dimen>
+    <dimen name="margin_top_navigate_up">94dp</dimen>
 
     <dimen name="text_sm">14sp</dimen>
     <dimen name="text_md">16sp</dimen>

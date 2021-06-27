@@ -2,8 +2,8 @@ package com.greedygames.geticons.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.greedygames.geticons.data.IconSetDetails
 import com.greedygames.geticons.data.models.Icon
+import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.repositories.IconSetRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -19,12 +19,8 @@ class IconSetViewModel(
     private val _iconSetDetailsData = MutableLiveData<IconSetDetailsResponse>()
     val iconSetDetailsData: LiveData<IconSetDetailsResponse> = _iconSetDetailsData
 
-    // List of icons under the icon set.
-    @Volatile
-    private var icons = mutableListOf<Icon>()
-
-    private val _iconListData = MutableLiveData<IconListResponse>()
-    val iconListData: LiveData<IconListResponse> = _iconListData
+    private val _iconListData = MutableLiveData<IconSetIconsResponse>()
+    val iconSetIconsData: LiveData<IconSetIconsResponse> = _iconListData
 
     init {
         // Initial API calls.
@@ -52,31 +48,25 @@ class IconSetViewModel(
     }
 
     private fun loadIcons() {
-        if (iconListData.value is IconListResponse.Loading) {
+        if (iconSetIconsData.value is IconSetIconsResponse.Loading) {
             // To avoid multiple API calls at once.
             return
         }
         // Update state
-        _iconListData.value = IconListResponse.Loading(icons)
-
-        val offset = icons.size
+        _iconListData.value = IconSetIconsResponse.Loading
 
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
-                iconSetRepository.getIconSetIcons(
-                    iconSetId,
-                    offset
-                )
+                iconSetRepository.getIconSetIcons(iconSetId)
             }.onSuccess { result ->
-                icons.addAll(result.icons)
                 // Notify observers
                 _iconListData.postValue(
-                    IconListResponse.Success(icons)
+                    IconSetIconsResponse.Success(result.icons)
                 )
             }.onFailure {
                 // Notify observers
                 _iconListData.postValue(
-                    IconListResponse.Error(icons)
+                    IconSetIconsResponse.Error
                 )
             }
         }
@@ -99,14 +89,14 @@ class IconSetViewModel(
     // States provided by this viewModel.
     sealed class IconSetDetailsResponse {
         object Loading : IconSetDetailsResponse()
-        class Success(val details: IconSetDetails) : IconSetDetailsResponse()
+        class Success(val details: IconSet) : IconSetDetailsResponse()
         object Error : IconSetDetailsResponse()
     }
 
-    sealed class IconListResponse {
-        class Loading(val currentList: List<Icon>) : IconListResponse()
-        class Success(val newList: List<Icon>) : IconListResponse()
-        class Error(val currentList: List<Icon>) : IconListResponse()
+    sealed class IconSetIconsResponse {
+        object Loading : IconSetIconsResponse()
+        class Success(val icons: List<Icon>) : IconSetIconsResponse()
+        object Error : IconSetIconsResponse()
     }
 
     class IconSetViewModelFactory(

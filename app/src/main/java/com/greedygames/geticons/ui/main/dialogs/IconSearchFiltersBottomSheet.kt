@@ -1,4 +1,4 @@
-package com.greedygames.geticons.ui.home.dialogs
+package com.greedygames.geticons.ui.main.dialogs
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable

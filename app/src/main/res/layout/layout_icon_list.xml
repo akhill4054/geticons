@@ -30,6 +30,7 @@
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmerProgress"
             isVisible="@{isShimmer}"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:paddingTop="32dp"
             tools:visibility="gone"

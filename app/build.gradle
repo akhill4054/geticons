@@ -85,8 +85,4 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     // Test UI
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
-
-    // Debug
-    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
 }

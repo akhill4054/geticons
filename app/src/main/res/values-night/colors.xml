@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Theme colors  -->
+    <color name="bg_primary">#000000</color>
+    <color name="bg_primary_variant">#121212</color>
+    <color name="bg_secondary">#181819</color>
+
+    <color name="text_primary">#F6F6F6</color>
+    <color name="text_secondary">#525A73</color>
+    <color name="text_light">#464A50</color>
+~
+    <color name="error">#DD3A2E</color>
+    <color name="status_bar_color">#000000</color>
+</resources>

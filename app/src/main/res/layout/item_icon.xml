@@ -119,18 +119,6 @@
                 app:layout_goneMarginTop="@dimen/margin_md"
                 tools:text="$200" />
 
-            <ImageView
-                android:id="@+id/info"
-                style="@style/icon_btn_typical"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="@dimen/margin_sm"
-                android:src="@drawable/ic_info"
-                app:tint="@null"
-                android:contentDescription="@string/info"
-                app:layout_constraintBottom_toBottomOf="@+id/textView16"
-                app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toTopOf="@+id/textView16" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </layout>

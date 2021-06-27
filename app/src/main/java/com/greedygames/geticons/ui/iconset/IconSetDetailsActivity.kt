@@ -1,27 +1,33 @@
 package com.greedygames.geticons.ui.iconset
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.greedygames.geticons.ERROR_TYPICAL
 import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.data.models.IconSet
-import com.greedygames.geticons.databinding.ActivityIconSetBinding
+import com.greedygames.geticons.databinding.ActivityIconSetDetailsBinding
 import com.greedygames.geticons.ui.adapters.IconListAdapter
+import com.greedygames.geticons.ui.author.AuthorDetailsActivity
+import com.greedygames.geticons.ui.dialogs.LicenseInfoPopup
+import com.greedygames.geticons.ui.icon.IconDetailsActivity
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSetViewModel
-import com.greedygames.geticons.viewmodels.IconSetViewModel.IconListResponse
 import com.greedygames.geticons.viewmodels.IconSetViewModel.IconSetDetailsResponse
+import com.greedygames.geticons.viewmodels.IconSetViewModel.IconSetIconsResponse
 
-class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener,
-    IconListAdapter.ItemClickListener {
+class IconSetDetailsActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener,
+    IconListAdapter.ItemClickListener, View.OnClickListener {
 
-    private lateinit var binding: ActivityIconSetBinding
+    private lateinit var binding: ActivityIconSetDetailsBinding
+
+    private val iconSetLayout get() = binding.iconSetDetailsLayout
 
     private val viewModel: IconSetViewModel by viewModels {
         IconSetViewModel.IconSetViewModelFactory(
@@ -39,7 +45,7 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
 
         binding = DataBindingUtil.setContentView(
             this,
-            R.layout.activity_icon_set
+            R.layout.activity_icon_set_details
         )
 
         iconSetId = intent.getIntExtra(ARG_ICON_SET_ID, -1)
@@ -52,7 +58,8 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
         // Icons list recycler view
         iconListAdapter = IconListAdapter(
             this,
-            this
+            this,
+            false
         )
         val iconsRecyclerView = binding.layoutIcons.icons
         iconsRecyclerView.adapter = iconListAdapter
@@ -68,11 +75,12 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
             // Show icons list shimmer
             viewModel.retry()
         }
-        binding.author.setOnClickListener {
-            // Navigate to author details screen
-        }
-        binding.navigateUp.setOnClickListener {
-            onBackPressed()
+        iconSetLayout.textAuthorName.setOnClickListener(this)
+        iconSetLayout.info.setOnClickListener(this)
+        binding.navigateUp.setOnClickListener(this)
+        // Temporary workaround
+        binding.navigateUpOnProgress.setOnClickListener {
+            finish()
         }
     }
 
@@ -89,7 +97,7 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
                     showIconListShimmer()
                 }
                 is IconSetDetailsResponse.Success -> {
-                    binding.iconSetDetails = data.details
+                    iconSetLayout.iconSet = data.details
                 }
                 else -> {
                     // Error
@@ -97,34 +105,23 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
                 }
             }
         })
-        viewModel.iconListData.observe(this, { data ->
+        viewModel.iconSetIconsData.observe(this, { data ->
             // Hide retry, if visible
             binding.layoutIcons.retryLayout.isRetry = false
             // Hide shimmer, if visible
             hideIconListShimmer()
 
             when (data) {
-                is IconListResponse.Loading -> {
-                    if (data.currentList.isEmpty()) {
-                        showIconListShimmer()
-                    }
+                is IconSetIconsResponse.Loading -> {
+                    showIconListShimmer()
                 }
-                is IconListResponse.Success -> {
+                is IconSetIconsResponse.Success -> {
                     hideIconListShimmer()
-                    iconListAdapter.submitList(data.newList)
+                    iconListAdapter.submitList(data.icons)
                 }
-                is IconListResponse.Error -> {
-                    if (data.currentList.isEmpty()) {
-                        // Show retry
-                        binding.layoutIcons.retryLayout.isRetry = true
-                    } else {
-                        // Show error message
-                        SnackbarHelper.showError(
-                            binding.coordinatorLayout,
-                            ERROR_TYPICAL
-                        )
-                        iconListAdapter.disableProgress()
-                    }
+                is IconSetIconsResponse.Error -> {
+                    // Show retry
+                    binding.layoutIcons.retryLayout.isRetry = true
                 }
             }
         })
@@ -145,16 +142,51 @@ class IconSetActivity : AppCompatActivity(), IconListAdapter.ItemRequestListener
     }
 
     override fun onIconSetItemClicked(clickId: Int, icon: Icon) {
+        when (clickId) {
+            IconListAdapter.CLICK_ID_DOWNLOAD -> {
 
+            }
+            else -> {
+                IconDetailsActivity.launch(this, icon)
+            }
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.info -> {
+                val license = iconSetLayout.iconSet!!.getFinalLicense()
+                if (license != null) {
+                    LicenseInfoPopup(this, license).show(v)
+                } else {
+                    SnackbarHelper.showSnackbar(
+                        binding.coordinatorLayout,
+                        getString(R.string.msg_no_info)
+                    )
+                }
+            }
+            R.id.navigate_up -> {
+                finish()
+            }
+            R.id.text_author_name -> {
+                // Navigate to author details screen
+                AuthorDetailsActivity.launch(
+                    this,
+                    binding.iconSetDetailsLayout.iconSet!!.author
+                )
+            }
+        }
     }
 
     companion object {
         private const val ARG_ICON_SET_ID = "icon_set_id"
 
         fun launch(f: Fragment, iconSet: IconSet) {
-            val context = f.requireContext()
+            launch(f.requireContext(), iconSet)
+        }
 
-            val intent = Intent(context, IconSetActivity::class.java).apply {
+        fun launch(context: Context, iconSet: IconSet) {
+            val intent = Intent(context, IconSetDetailsActivity::class.java).apply {
                 putExtra(ARG_ICON_SET_ID, iconSet.id)
             }
             context.startActivity(intent)

@@ -2,7 +2,8 @@ package com.greedygames.geticons.repositories
 
 import android.app.Application
 import com.greedygames.geticons.PAGINATION_ITEM_COUNT
-import com.greedygames.geticons.data.IconSetDetails
+import com.greedygames.geticons.data.models.Author
+import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.data.net.ApiClient
 import com.greedygames.geticons.data.net.ApiInterface
 import com.greedygames.geticons.data.net.models.IconListResponse
@@ -21,14 +22,26 @@ class IconSetRepository private constructor(application: Application) {
     suspend fun getIconSets(after: Int?): IconSetsResponse =
         apiInterface.getIconSets(after = after, count = PAGINATION_ITEM_COUNT)
 
-    suspend fun getIconSetDetails(iconSetId: Int): Response<IconSetDetails> =
+    suspend fun getIconSetDetails(iconSetId: Int): Response<IconSet> =
         apiInterface.getIconSetDetails(iconSetId)
 
-    suspend fun getIconSetIcons(iconSetId: Int, offset: Int): IconListResponse {
-        return apiInterface.getIconSetIcons(iconSetId, offset, PAGINATION_ITEM_COUNT).apply {
+    suspend fun getIconSetIcons(iconSetId: Int): IconListResponse {
+        return apiInterface.getIconSetIcons(iconSetId).apply {
             icons.forEach { it.initPreviewUrl() }
         }
     }
+
+    suspend fun getAuthorDetails(authorId: Int): Author =
+        apiInterface.getAuthorDetails(authorId)
+
+    suspend fun getAuthorIconSets(authorId: Int, after: Int?): IconSetsResponse =
+        apiInterface.getAuthorIconSets(authorId, PAGINATION_ITEM_COUNT, after)
+
+    suspend fun getUserDetails(userId: Int): Author =
+        apiInterface.getUserDetails(userId)
+
+    suspend fun getUserIconSets(userId: Int, after: Int?): IconSetsResponse =
+        apiInterface.getUserIconSets(userId, PAGINATION_ITEM_COUNT, after)
 
     companion object {
         @Volatile

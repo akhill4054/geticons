@@ -110,7 +110,8 @@ class IconSetListAdapter(
             val iconSet = _binding.iconSet!!
 
             itemClickListener.onIconSetItemClicked(
-                if (view!!.id == R.id.info) {
+                view!!,
+                if (view.id == R.id.info) {
                     // Info button clicked, request to
                     // show item info.
                     CLICK_ID_SHOW_INFO
@@ -119,7 +120,7 @@ class IconSetListAdapter(
                     // item details.
                     CLICK_ID_SHOW_DETAILS
                 },
-                iconSet
+                iconSet,
             )
         }
 
@@ -171,6 +172,6 @@ class IconSetListAdapter(
     }
 
     interface ItemClickListener {
-        fun onIconSetItemClicked(clickId: Int, iconSet: IconSet)
+        fun onIconSetItemClicked(view: View, clickId: Int, iconSet: IconSet)
     }
 }

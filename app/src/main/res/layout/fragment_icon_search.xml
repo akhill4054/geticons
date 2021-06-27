@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".ui.home.fragments.IconSearchFragment">
+        tools:context=".ui.main.fragments.IconSearchFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/searchContainer"

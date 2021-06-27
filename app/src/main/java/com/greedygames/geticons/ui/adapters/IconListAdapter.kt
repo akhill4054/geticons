@@ -13,7 +13,8 @@ import com.greedygames.geticons.databinding.ItemIconBinding
 
 class IconListAdapter(
     itemRequestListener: ItemRequestListener,
-    itemClickListener: ItemClickListener
+    itemClickListener: ItemClickListener,
+    private val isPaginationEnabled: Boolean = true
 ) : ListAdapter<Any, RecyclerView.ViewHolder>(DiffCallback()) {
 
     private val _itemRequestListener = itemRequestListener
@@ -44,7 +45,7 @@ class IconListAdapter(
             holder.bind(getItem(position) as Icon)
         }
 
-        if (position == itemCount - 4) {
+        if (isPaginationEnabled && position == itemCount - 4) {
             enableProgress()
             // Last item almost reached, request more items.
             _itemRequestListener.onMoreItemsRequested()
@@ -105,7 +106,6 @@ class IconListAdapter(
 
         init {
             // Click listeners.
-            _binding.info.setOnClickListener(this)
             _binding.download.setOnClickListener(this)
             _binding.root.setOnClickListener(this)
         }
@@ -120,13 +120,8 @@ class IconListAdapter(
 
             itemClickListener.onIconSetItemClicked(
                 when (view!!.id) {
-                    R.id.info -> {
-                        // Info button clicked, request to
-                        // show item info.
-                        CLICK_ID_SHOW_INFO
-                    }
                     R.id.download -> {
-                        // Request to donload the icon.
+                        // Request to download the icon.
                         CLICK_ID_DOWNLOAD
                     }
                     else -> {
@@ -177,8 +172,7 @@ class IconListAdapter(
         private const val ITEM_TYPE_PROGRESS = 1
 
         const val CLICK_ID_SHOW_DETAILS = 0
-        const val CLICK_ID_SHOW_INFO = 1
-        const val CLICK_ID_DOWNLOAD = 2
+        const val CLICK_ID_DOWNLOAD = 1
     }
 
     interface ItemRequestListener {

@@ -1,7 +1,8 @@
-package com.greedygames.geticons.ui.home
+package com.greedygames.geticons.ui.main
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -9,13 +10,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import com.greedygames.geticons.R
 import com.greedygames.geticons.databinding.ActivityHomeBinding
-import com.greedygames.geticons.ui.home.fragments.IconSearchFragment
-import com.greedygames.geticons.ui.home.fragments.IconSetListFragment
+import com.greedygames.geticons.ui.main.fragments.IconSearchFragment
+import com.greedygames.geticons.ui.main.fragments.IconSetListFragment
 import com.greedygames.geticons.utils.SnackbarHelper
+import com.greedygames.geticons.viewmodels.AppViewModel
 
 class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
 
     private lateinit var binding: ActivityHomeBinding
+
+    private val appViewModel: AppViewModel by viewModels()
 
     private val viewPager get() = binding.viewPager
 
@@ -26,6 +30,7 @@ class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
         setContentView(binding.root)
 
         setupViews()
+        subscribeObservers()
     }
 
     private fun setupViews() {
@@ -37,6 +42,17 @@ class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
         TabLayoutMediator(binding.tabLayout, viewPager) { tab, position ->
             tab.text = pagerAdapter.titles[position]
         }.attach()
+
+        // Click listeners
+        binding.darkModeToggleButton.setOnClickListener {
+            appViewModel.toggleDarkMode()
+        }
+    }
+
+    private fun subscribeObservers() {
+        appViewModel.isDarkMode.observe(this, { isDarkMode ->
+            binding.isDarkMode = isDarkMode
+        })
     }
 
     override fun onBackPressed() {

@@ -8,6 +8,9 @@
     <string name="err_bad_response">Something went wrong, please try again.</string>
     <string name="err_typical">Oops! An error occurred.</string>
 
+    <!-- Messages -->
+    <string name="msg_no_info">Info not available.</string>
+
     <string name="tab_icon_sets">Icon Set</string>
     <string name="tab_icons">Icons</string>
 
@@ -18,8 +21,6 @@
     <string name="info">Info</string>
     <string name="license_type_">License type :&#160;</string>
     <string name="navigate_back">Navigate back</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error">Error</string>
     <string name="retry">Retry</string>
     <string name="no_icon_sets">No icon sets.</string>
@@ -37,6 +38,10 @@
     <string name="filter_icons">Filter Icons</string>
     <string name="premium_">Premium :</string>
     <string name="clear_filter">Clear Filter</string>
+    <string name="total_icon_sets_d">Total icon sets : %d</string>
+    <string name="author_">Author :&#160;</string>
+    <string name="icons_count_d">Icons count : %d</string>
+    <string name="theme">Theme</string>
 
     <!-- Icon search filter option items. -->
     <string-array name="filter_by_premium_options">

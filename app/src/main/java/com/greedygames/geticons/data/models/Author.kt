@@ -1,19 +1,31 @@
 package com.greedygames.geticons.data.models
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import com.greedygames.geticons.NOT_APPLICABLE
 
-@Parcelize
+/**
+ * @see Author may represent either an author or
+ * a user, it'll depend on out of userId and authorId
+ * which one is not null.
+ * */
 class Author(
-    @SerializedName("company")
-    val company: String,
-    @SerializedName("prices")
-    val username: String,
+    @SerializedName("user_id")
+    val userId: Int? = null,
+    @SerializedName("author_id")
+    val authorId: Int? = null,
     @SerializedName("name")
     val name: String,
-    @SerializedName("is_designer")
-    val isDesigner: Boolean,
-    @SerializedName("icon_sets_count")
+    @SerializedName("website")
+    val website: String?,
+    @SerializedName("iconsets_count")
     val iconSetsCount: Int
-) : Parcelable
+) {
+
+    fun getFormattedWebsiteUrl(): String {
+        return if (!website.isNullOrEmpty()) {
+            website
+        } else {
+            "Website: $NOT_APPLICABLE"
+        }
+    }
+}

@@ -1,4 +1,4 @@
-package com.greedygames.geticons.ui.home.fragments
+package com.greedygames.geticons.ui.main.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -11,7 +11,8 @@ import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.IconSet
 import com.greedygames.geticons.databinding.FragmentIconSetListBinding
 import com.greedygames.geticons.ui.adapters.IconSetListAdapter
-import com.greedygames.geticons.ui.iconset.IconSetActivity
+import com.greedygames.geticons.ui.dialogs.IconSetInfoPopup
+import com.greedygames.geticons.ui.iconset.IconSetDetailsActivity
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSetListViewModel
 import com.greedygames.geticons.viewmodels.IconSetListViewModel.IconSetListData
@@ -137,12 +138,13 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
         viewModel.loadMoreItems()
     }
 
-    override fun onIconSetItemClicked(clickId: Int, iconSet: IconSet) {
+    override fun onIconSetItemClicked(view: View, clickId: Int, iconSet: IconSet) {
         if (clickId == IconSetListAdapter.CLICK_ID_SHOW_DETAILS) {
             // Navigate to icon set details screen.
-            IconSetActivity.launch(this, iconSet)
+            IconSetDetailsActivity.launch(this, iconSet)
         } else { // Show info.
-
+            IconSetInfoPopup(requireContext(), iconSet)
+                .show(view)
         }
     }
 }

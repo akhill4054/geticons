@@ -3,11 +3,15 @@ package com.greedygames.geticons.repositories
 import android.app.Application
 import com.greedygames.geticons.PAGINATION_ITEM_COUNT
 import com.greedygames.geticons.data.models.Category
+import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.data.models.Style
 import com.greedygames.geticons.data.net.ApiClient
 import com.greedygames.geticons.data.net.models.CategoriesResponse
 import com.greedygames.geticons.data.net.models.IconListResponse
 import com.greedygames.geticons.data.net.models.StylesResponse
+import com.greedygames.geticons.repositories.IconRepository.IconSearchFilter.Companion.LICENCES_NO_ATTRIBUTION
+import com.greedygames.geticons.repositories.IconRepository.IconSearchFilter.Companion.LICENSES_ALL
+import com.greedygames.geticons.repositories.IconRepository.IconSearchFilter.Companion.LICENSES_COMMERCIAL
 
 class IconRepository private constructor(application: Application) {
 
@@ -54,6 +58,11 @@ class IconRepository private constructor(application: Application) {
         }
     }
 
+    suspend fun getIconDetails(iconId: Int): Icon =
+        apiInterface.getIconDetails(iconId).apply {
+            initPreviewUrl()
+        }
+
     suspend fun getCategories(): CategoriesResponse =
         apiInterface.getCategories()
 
@@ -62,6 +71,7 @@ class IconRepository private constructor(application: Application) {
 
     /**
      * Class to define search filters.
+     * @param premium is self explanatory.
      * @param license is specified by,
      * @see LICENSES_ALL
      * @see LICENSES_COMMERCIAL

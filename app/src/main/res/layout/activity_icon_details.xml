@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="icon"
+            type="com.greedygames.geticons.data.models.Icon" />
+
+        <variable
+            name="isLoading"
+            type="Boolean" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        tools:context=".ui.icon.IconDetailsActivity">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/navigate_up"
+                    style="@style/navigate_up_btn_typical"
+                    android:layout_marginStart="22dp"
+                    android:layout_marginTop="@dimen/toolbar_top_margin"
+                    android:contentDescription="@string/navigate_back"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardView3"
+                    android:layout_width="0dp"
+                    android:layout_height="210dp"
+                    android:layout_marginLeft="@dimen/toolbar_side_margin"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginRight="@dimen/toolbar_side_margin"
+                    android:elevation="0dp"
+                    app:cardBackgroundColor="@color/bg_secondary"
+                    app:cardCornerRadius="28dp"
+                    app:contentPadding="24dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/navigate_up">
+
+                    <ImageView
+                        preview_url="@{icon.largestPreviewUrl}"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/icon"
+                        tools:src="@drawable/icon_preview_placeholder" />
+                </androidx.cardview.widget.CardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/download"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:padding="9dp"
+                    android:text="@string/download"
+                    android:textAllCaps="false"
+                    android:textSize="20sp"
+                    app:cornerRadius="17dp"
+                    app:elevation="0dp"
+                    app:icon="@drawable/ic_download"
+                    app:iconGravity="textStart"
+                    app:iconSize="18dp"
+                    app:layout_constraintEnd_toEndOf="@+id/cardView3"
+                    app:layout_constraintStart_toStartOf="@+id/cardView3"
+                    app:layout_constraintTop_toBottomOf="@+id/cardView3" />
+
+                <include
+                    android:id="@+id/iconSetDetailsLayout"
+                    layout="@layout/layout_icon_set_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/download" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            isVisible="@{isLoading}"
+            tools:visibility="gone"
+            android:layout_marginTop="@dimen/margin_top_navigate_up"
+            android:background="?attr/colorSurface">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="true"
+                android:indeterminateTint="?colorPrimary" />
+        </FrameLayout>
+
+        <include
+            android:id="@+id/retry_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/margin_top_navigate_up"
+            layout="@layout/layout_retry_message" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

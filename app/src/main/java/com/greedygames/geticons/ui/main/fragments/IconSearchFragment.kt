@@ -1,4 +1,4 @@
-package com.greedygames.geticons.ui.home.fragments
+package com.greedygames.geticons.ui.main.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -13,7 +13,8 @@ import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.databinding.FragmentIconSearchBinding
 import com.greedygames.geticons.ui.adapters.IconListAdapter
-import com.greedygames.geticons.ui.home.dialogs.IconSearchFiltersBottomSheet
+import com.greedygames.geticons.ui.main.dialogs.IconSearchFiltersBottomSheet
+import com.greedygames.geticons.ui.icon.IconDetailsActivity
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSearchViewModel
 import com.greedygames.geticons.viewmodels.IconSearchViewModel.IconListData
@@ -171,6 +172,13 @@ class IconSearchFragment : Fragment(), IconListAdapter.ItemRequestListener,
     }
 
     override fun onIconSetItemClicked(clickId: Int, icon: Icon) {
+        when (clickId) {
+            IconListAdapter.CLICK_ID_DOWNLOAD -> {
 
+            }
+            else -> {
+                IconDetailsActivity.launch(this, icon)
+            }
+        }
     }
 }

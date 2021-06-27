@@ -14,7 +14,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.home.fragments.IconSetListFragment">
+        tools:context=".ui.main.fragments.IconSetListFragment">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/iconSetList"
@@ -23,7 +23,7 @@
             android:clipToPadding="false"
             android:paddingTop="@dimen/margin_top_icon_set_list"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".ui.home.fragments.IconSetListFragment"
+            tools:context=".ui.main.fragments.IconSetListFragment"
             tools:itemCount="4"
                 tools:listitem="@layout/item_icon_set" />
 

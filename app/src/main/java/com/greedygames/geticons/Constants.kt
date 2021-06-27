@@ -7,7 +7,7 @@ const val CONNECTION_TIMEOUT_IN_SECONDS = 20
 
 // App Configurations
 const val PAGINATION_ITEM_COUNT = 20
-const val IDEAL_ICON_PREVIEW_SIZE = 64
+const val IDEAL_ICON_PREVIEW_SIZE = 128
 
 // Error codes
 const val ERROR_NO_INTERNET = -1

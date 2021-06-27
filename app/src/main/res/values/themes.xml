@@ -9,6 +9,12 @@
         <item name="colorSecondary">@color/purple_200</item>
         <item name="colorSecondaryVariant">@color/purple_300</item>
         <item name="colorOnSecondary">@color/white</item>
+
+        <item name="colorSurface">@color/bg_primary</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <item name="android:statusBarColor">@color/status_bar_color</item>
+
         <!-- Font-family. -->
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
