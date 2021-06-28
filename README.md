@@ -58,3 +58,5 @@ Shows selectable options, listing all the available download formats for an icon
 ### Decisions Made During the Development
 - Items on the icon list don't show license and author details as they're not provided by the APIs to list icons.
 - Removed swipe to refresh from the lists on the [HomeScreen](#home-screen), as it was causing some scroll issues.
+- Networks call are written in a synchronous way using Kotlin-corutines instead of conventional callback pattern, I just wanted to give this approach a try. This approach makes your codes more readable and easy to manage though.
+- Almost all fields of models classes are marked with Gson's @SerializedName annotation, doing so isn't really necessary but I still decided to do it to prevent the problems that could be caused by accidental field renames.
