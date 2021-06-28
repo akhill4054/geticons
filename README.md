@@ -3,10 +3,10 @@ Unofficial icon-finder app that shows public icons from publishers around the gl
 
 ## Features
 ### Home Screen <span id="home-screen"></span>
-- **Icon Set Tab** - Shows a list all the available public icon-sets, this is an endless scrollable list where 20 items are fetched at a time. 
+- **Icon Set Tab** - Displays a list all the available public icon-sets, this is an endless scrollable list where 20 items are fetched at a time. 
   - Clicking on an item takes you to IconSetDeatails screen. 
   - Clicking on info button on an item will show you addition information about the icon-set. License text is clickable (if available), cliking on it opens license url with the device web broswer.
-- **Icon Search Tab** - Shows you an endless list of all public icons where 20 items are fetched at a time. 
+- **Icon Search Tab** - Displays an endless list of all public icons where 20 items are fetched at a time. 
   - If you type anything in the search bar, the list will show items of the search result. 
   - You can also filter the list by premium icon type and license type.
   -  Clicking on any of the list icons takes you the [IconDetails](#icon-details) screen. 
