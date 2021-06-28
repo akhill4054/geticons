@@ -34,7 +34,7 @@ Shows details about an icon's icon-set containing name, type, price, author/user
 </p>
 
 ### Author Details <span id="author-details"></span>
-Shows some basic details about an author listing a list of author's icon-sets with pagination where 20 items are fetched at a time.
+Shows some basic details about an author/user listing a list of author's/user's icon-sets with pagination where 20 items are fetched at a time(NOTE: An icon/icon-set can belong to either to a user or an auther, APIs to retieve details and icon-sets are different for author and user. This screen shows apropriate details and icon-sets using a passed userId or an authorId).
 - Clicking on an item open the [IconSetDetails](#icon-set-details) screen.
 <p align="center">
   <img height="350px" alt="author_icon_sets" src="https://github.com/akhill4054/geticons/blob/master/screenshots/author_icon_sets.jpg">
