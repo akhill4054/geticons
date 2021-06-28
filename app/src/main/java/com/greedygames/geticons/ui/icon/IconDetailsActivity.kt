@@ -13,6 +13,7 @@ import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.databinding.ActivityIconDetailsBinding
 import com.greedygames.geticons.ui.author.AuthorDetailsActivity
+import com.greedygames.geticons.ui.dialogs.DownloadIconBottomSheet
 import com.greedygames.geticons.ui.dialogs.LicenseInfoPopup
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconDetailsViewModel
@@ -106,7 +107,20 @@ class IconDetailsActivity : AppCompatActivity(), View.OnClickListener {
                 }
             }
             R.id.download -> {
+                val icon = binding.icon!!
 
+                if (!icon.isPremium) {
+                    DownloadIconBottomSheet.show(
+                        supportFragmentManager,
+                        icon.getAvailableDownloadFormats()
+                    )
+                } else {
+                    // Show premium download message
+                    SnackbarHelper.showSnackbar(
+                        binding.root,
+                        getString(R.string.msg_premium_download)
+                    )
+                }
             }
             R.id.retry -> {
                 viewModel.loadIconDetails()

@@ -1,9 +1,11 @@
 package com.greedygames.geticons.data.models
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.greedygames.geticons.IDEAL_ICON_PREVIEW_SIZE
 import com.greedygames.geticons.data.models.Icon.RasterSize
 import com.greedygames.geticons.data.models.Icon.VectorSize
+import kotlinx.parcelize.Parcelize
 
 /**
  *
@@ -77,8 +79,41 @@ data class Icon(
         return null
     }
 
-    fun getDownloadUrl(): String? {
-        return null
+    fun getAvailableDownloadFormats(): ArrayList<DownloadFormat> {
+        val downloadFormats = arrayListOf<DownloadFormat>()
+
+        // Parsing raster sizes
+        rasterSizes?.let {
+            for (rs in rasterSizes) {
+                for (format in rs.formats) {
+                    DownloadFormat(
+                        iconId = id,
+                        height = rs.height,
+                        width = rs.width,
+                        format = format
+                    ).also {
+                        downloadFormats.add(it)
+                    }
+                }
+            }
+        }
+        // Parsing vector sizes
+        vectorSizes?.let {
+            for (vs in vectorSizes) {
+                for (format in vs.formats) {
+                    DownloadFormat(
+                        iconId = id,
+                        height = vs.height,
+                        width = vs.width,
+                        format = format
+                    ).also {
+                        downloadFormats.add(it)
+                    }
+                }
+            }
+        }
+
+        return downloadFormats
     }
 
     class RasterSize(
@@ -100,6 +135,7 @@ data class Icon(
         val formats: List<Format>
     )
 
+    @Parcelize
     class Format(
         @SerializedName("preview_url")
         val previewUrl: String,
@@ -107,5 +143,14 @@ data class Icon(
         val format: String,
         @SerializedName("download_url")
         val downloadUrl: String,
-    )
+    ) : Parcelable
+
+    @Parcelize
+    class DownloadFormat(
+        var isSelected: Boolean = false,
+        val iconId: Int,
+        val height: Int,
+        val width: Int,
+        val format: Format
+    ) : Parcelable
 }

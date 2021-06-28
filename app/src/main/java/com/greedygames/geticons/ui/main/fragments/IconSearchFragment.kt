@@ -13,7 +13,8 @@ import com.greedygames.geticons.R
 import com.greedygames.geticons.data.models.Icon
 import com.greedygames.geticons.databinding.FragmentIconSearchBinding
 import com.greedygames.geticons.ui.adapters.IconListAdapter
-import com.greedygames.geticons.ui.main.dialogs.IconSearchFiltersBottomSheet
+import com.greedygames.geticons.ui.dialogs.DownloadIconBottomSheet
+import com.greedygames.geticons.ui.dialogs.IconSearchFiltersBottomSheet
 import com.greedygames.geticons.ui.icon.IconDetailsActivity
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.IconSearchViewModel
@@ -174,7 +175,16 @@ class IconSearchFragment : Fragment(), IconListAdapter.ItemRequestListener,
     override fun onIconSetItemClicked(clickId: Int, icon: Icon) {
         when (clickId) {
             IconListAdapter.CLICK_ID_DOWNLOAD -> {
-
+                if (!icon.isPremium) {
+                    DownloadIconBottomSheet.show(
+                        childFragmentManager,
+                        icon.getAvailableDownloadFormats()
+                    )
+                } else {
+                    snackbarListener.onShowSnackbar(
+                        getString(R.string.msg_premium_download)
+                    )
+                }
             }
             else -> {
                 IconDetailsActivity.launch(this, icon)

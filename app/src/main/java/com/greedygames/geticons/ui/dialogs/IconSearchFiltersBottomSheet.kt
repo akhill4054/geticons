@@ -1,4 +1,4 @@
-package com.greedygames.geticons.ui.main.dialogs
+package com.greedygames.geticons.ui.dialogs
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -55,6 +55,7 @@ class IconSearchFiltersBottomSheet : BottomSheetDialogFragment() {
         })
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
+        // Setup views here
         // Spinners
         // Premium filter options
         ArrayAdapter.createFromResource(

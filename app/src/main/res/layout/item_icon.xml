@@ -66,6 +66,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_md"
                 android:text="@string/download"
+                android:alpha="@{icon.isPremium ? 0.7F : 1F}"
                 android:textAllCaps="false"
                 android:textSize="13dp"
                 app:cornerRadius="11dp"

@@ -124,6 +124,7 @@ class IconSetListFragment : Fragment(), IconSetListAdapter.ItemRequestListener,
                         snackbarListener.onError(data.code)
                     }
                 }
+                else -> {}
             }
         })
     }

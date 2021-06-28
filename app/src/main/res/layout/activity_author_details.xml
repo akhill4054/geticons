@@ -146,6 +146,7 @@
                 android:id="@+id/navigateUpOnProgress"
                 style="@style/navigate_up_btn_typical"
                 android:layout_marginStart="22sp"
+                android:layout_marginTop="@dimen/toolbar_side_margin"
                 android:contentDescription="@string/navigate_back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
