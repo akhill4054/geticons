@@ -15,7 +15,7 @@ import com.greedygames.geticons.ui.main.fragments.IconSetListFragment
 import com.greedygames.geticons.utils.SnackbarHelper
 import com.greedygames.geticons.viewmodels.AppViewModel
 
-class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
+class HomeActivity : AppCompatActivity(), SnackbarHelper.SnackbarListener {
 
     private lateinit var binding: ActivityHomeBinding
 
@@ -27,6 +27,9 @@ class HomeActivity() : AppCompatActivity(), SnackbarHelper.SnackbarListener {
         super.onCreate(savedInstanceState)
 
         binding = ActivityHomeBinding.inflate(layoutInflater)
+
+        // Remove splash theme
+        setTheme(R.style.Theme_GetIcons)
         setContentView(binding.root)
 
         setupViews()

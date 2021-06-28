@@ -12,7 +12,7 @@
         android:resizeableActivity="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.GetIcons">
+        android:theme="@style/Theme.Splash">
 
         <activity android:name=".ui.author.AuthorDetailsActivity" />
         <activity android:name=".ui.icon.IconDetailsActivity" />

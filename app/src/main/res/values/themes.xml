@@ -18,4 +18,11 @@
         <!-- Font-family. -->
         <item name="android:fontFamily">@font/montserrat</item>
     </style>
+
+    <!--  Splash theme  -->
+    <style name="Theme.Splash" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorSurface">@color/bg_primary</item>
+
+        <item name="android:windowBackground">@drawable/splash_image</item>
+    </style>
 </resources>
